@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <%- include('../layouts/head', {title: 'Register | Inktale'}) %>
+    <script type="module" src="/js/register.js"></script>
   </head>
   <body>
     <section class="section form-section">
@@ -30,7 +31,7 @@
             </p>
           </div>
 
-          <form action="" class="form" data-form="">
+          <form class="form" data-form="">
             <div class="text-field-wrapper">
               <label for="name" class="body-large label"> Full Name </label>
               <input
@@ -98,5 +99,8 @@
         </div>
       </div>
     </section>
+
+    <!-- SNACKBAR -->
+    <div class="snackbar-wrapper" data-snackbar-wrapper=""></div>
   </body>
 </html>
