@@ -16,6 +16,11 @@ const generateUsername = require("../utils/generate_username_util");
  */
 
 const renderRegister = (req, res) => {
+  const { userAuthenticated } = req.session.user || false;
+
+  // Handle case where user is already authenticated
+  if (userAuthenticated) return res.redirect("/");
+
   res.render("./pages/register");
 };
 
