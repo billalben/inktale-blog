@@ -1,6 +1,18 @@
 <% const { userAuthenticated, name, username } = locals.sessionUser || {}; %>
 
 <header class="top-app-bar" data-top-app-bar="">
+  <% if (locals.route === '/create-blog') { %>
+  <button
+    class="icon-btn filled-tonal"
+    aria-label="Go to previous page"
+    data-back-btn
+  >
+    <span class="material-symbols-rounded" aria-hidden="true">
+      chevron_left
+    </span>
+    <div class="state-layer"></div>
+  </button>
+  <% } %>
   <a href="/" class="logo">
     <img
       src="/images/logo-light.svg"
@@ -19,13 +31,15 @@
   </a>
 
   <div class="trailing-action-wrapper">
-    <% if (userAuthenticated) { %>
+    <% if (userAuthenticated) { %> <% if (locals.route !== '/create-blog') { %>
 
-    <a href="/createBlog" class="btn btn-fill">
+    <a href="/create-blog" class="btn btn-fill">
       <span class="material-symbols-rounded leading-icon">edit</span>
       <p class="label-large">Write</p>
       <div class="state-layer"></div>
     </a>
+
+    <% } %>
 
     <div class="menu-wrapper" data-menu-wrapper>
       <button class="icon-btn" data-menu-toggler>

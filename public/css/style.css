@@ -515,7 +515,49 @@ button {
 .main {
   padding-block-start: var(--top-app-bar-height);
   min-height: calc(100vh - var(--footer-height));
-  min-height: calc(100dvh - var(--footer-height)); 
+  min-height: calc(100dvh - var(--footer-height));
+}
+
+.page {
+  padding-block: var(--space-5);
+}
+
+.page-title {
+  margin-block-end: var(--space-4);
+}
+
+.image-field-wrapper {
+  position: relative;
+  border: 1px dashed var(--outline-variant);
+  overflow: hidden;
+}
+
+.image-preview {
+  width: 100%;
+  overflow: hidden;
+  display: none;
+}
+
+.image-field-wrapper .image-preview.show {
+  display: block;
+}
+
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-field-wrapper .icon-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1;
+  display: none;
+}
+
+.image-field-wrapper:has(.image-preview.show) .icon-btn {
+  display: grid;
 }
 
 /* ============= #Components ============= */
@@ -623,7 +665,7 @@ button {
   box-shadow: var(--shadow-1);
 }
 
-:is(.btn-fill[disabled]) {
+:is(.btn-fill, .btn.filled-tonal)[disabled] {
   background-color: var(--on-surface-disabled);
   color: var(--on-surface-disabled-text);
   pointer-events: none;
@@ -646,6 +688,12 @@ button {
 
 .btn:has(> .trailing-icon) {
   padding-inline-end: var(--space-4);
+}
+
+.btn.filled-tonal {
+  background-color: var(--secondary-container);
+  color: var(--on-secondary-container);
+  --state-layer-background: var(--on-secondary-container);
 }
 
 /* +++ Snackbar +++ */
@@ -820,6 +868,12 @@ button {
   --state-layer-background: var(--on-surface);
 }
 
+.icon-btn.filled-tonal {
+  background-color: var(--surface-container-highest);
+  color: var(--on-surface-variant);
+  --state-layer-background: var(--on-surface-variant);
+}
+
 /* +++ Progress Bar +++ */
 .progress-bar {
   position: absolute;
@@ -914,6 +968,53 @@ button {
 
 .footer .container {
   opacity: 0.8;
+}
+
+/* ============= #CREATE BLOG ============= */
+.blog-write-form {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--surface-container);
+  border-radius: var(--radius-large);
+}
+
+.create-blog-page .image-field-wrapper {
+  display: flex;
+  min-height: 200px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
+  border-radius: var(--radius-large);
+}
+
+.image-field-wrapper .text {
+  text-align: center;
+  padding-inline: var(--space-4);
+  opacity: 0.8;
+}
+
+.create-blog-page .image-preview {
+  aspect-ratio: 21 / 9;
+}
+
+.create-blog-page:has(.image-preview.show)
+  :where(.image-field, .text, .image-field-wrapper .btn) {
+  display: none;
+}
+
+.create-blog-page :where(.title-field, .textarea) {
+  font-family: var(--font-monospace);
+}
+
+.create-blog-page .textarea {
+  resize: none;
+}
+
+.create-blog-page .footer-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* ============= #RESPONSIVE ============= */

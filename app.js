@@ -10,6 +10,7 @@ const register = require("./src/routes/register_route");
 const login = require("./src/routes/login_route");
 const { connectDB, disconnectDB } = require("./src/config/mongoose_config");
 const home = require("./src/routes/home_route");
+const createBlog = require("./src/routes/create_blog_route");
 
 // Initialize express
 const app = express();
@@ -19,6 +20,9 @@ app.set("view engine", "ejs");
 
 // Parse url-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded({ extended: true }));
+
+// Parse JSON bodies (as sent by API clients)
+app.use(express.json({ limit: "10mb" }));
 
 // Instance for session storage
 const store = new MongoStore({
@@ -45,6 +49,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use("/register", register);
 app.use("/login", login);
 app.use("/", home);
+app.use("/create-blog", createBlog);
 
 /*
  * Start the server

@@ -1,6 +1,6 @@
 "use strict";
 
-import Snackbar from "./snackbar.js";
+import Snackbar from "./utils/snackbar.js";
 
 const $form = document.querySelector("[data-form]");
 const $submitBtn = document.querySelector("[data-submit-btn]");
