@@ -20,6 +20,7 @@ const app = express();
 
 // Set public directory as the static folder
 app.set("view engine", "ejs");
+app.set("views", `${__dirname}/src/views`);
 
 // Parse url-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded({ extended: true }));
