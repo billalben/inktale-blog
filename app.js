@@ -13,6 +13,8 @@ const home = require("./src/routes/home_route");
 const createBlog = require("./src/routes/create_blog_route");
 const logout = require("./src/routes/logout_route");
 
+const userAuth = require("./src/middlewares/user_auth_middleware");
+
 // Initialize express
 const app = express();
 
@@ -50,8 +52,12 @@ app.use(express.static(`${__dirname}/public`));
 app.use("/register", register);
 app.use("/login", login);
 app.use("/", home);
-app.use("/create-blog", createBlog);
 app.use("/logout", logout);
+
+// Middleware to check if the user is authenticated
+app.use(userAuth);
+
+app.use("/create-blog", createBlog);
 
 /*
  * Start the server
