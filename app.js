@@ -11,6 +11,7 @@ const login = require("./src/routes/login_route");
 const { connectDB, disconnectDB } = require("./src/config/mongoose_config");
 const home = require("./src/routes/home_route");
 const createBlog = require("./src/routes/create_blog_route");
+const logout = require("./src/routes/logout_route");
 
 // Initialize express
 const app = express();
@@ -50,6 +51,7 @@ app.use("/register", register);
 app.use("/login", login);
 app.use("/", home);
 app.use("/create-blog", createBlog);
+app.use("/logout", logout);
 
 /*
  * Start the server
