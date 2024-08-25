@@ -9,6 +9,6 @@ const renderHome = require("../controllers/home_controller");
 
 
 // Get route: Render The Home Page
-router.get("/", renderHome); 
+router.get(["/", "/page/:pageNumber"], renderHome); 
 
 module.exports = router;

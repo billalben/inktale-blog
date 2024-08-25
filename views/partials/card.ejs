@@ -1,0 +1,72 @@
+<% 
+  const {
+    _id: blogId,
+    banner: {
+      url: bannerURL,
+    } = {},
+    title,
+    owner: {
+      username,
+      name,
+    },
+    createdAt,
+    readingTime,
+    reaction,
+    totalBookmark,
+  } = locals.blog;
+
+  /**
+   * Compress the banner image URL using Cloudinary's image transformation API.
+   */
+  const compressedBannerURL = bannerURL?.replace('upload/', 'upload/w_360,h_155,c_auto/q_auto/f_auto/');
+%>
+
+<div class="card">
+  <% if (compressedBannerURL) { %>
+   <figure class="car-banner img-holder">
+    <img src="<%= compressedBannerURL %>" width="360" height="155" alt="<%= title %>" class="img-cover">
+   </figure>
+  <% } %>
+
+  <div class="card-content">
+    <div class="card-meta">
+      <div class="avatar">
+        <p class="title-medium"><%= name.at() %></p>
+      </div>
+
+      <div>
+        <p class="label-large text-on-surface"><%= name %></p>
+        <p class="body-small text-on-surface-variant"><%=new Date(createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' })%></p>
+      </div>
+
+      <p class="label-small text-on-surface-variant trailing-text">
+        <%= readingTime %> min read
+      </p>
+    </div>
+
+    <h3 class="card-title title-medium text-on-surface"><%= title %></h3>
+  </div>
+
+  <div class="card-footer">
+    <div class="wrapper">
+      <span class="icon-small material-symbols-rounded text-on-surface-variant">
+        favorite
+      </span>
+      <p class="body-medium text-on-surface-variant">
+        <%= reaction %> Reactions
+      </p>
+    </div>
+
+    <div class="wrapper">
+      <span class="icon-small material-symbols-rounded text-on-surface-variant">
+        bookmark
+      </span>
+      <p class="body-medium text-on-surface-variant">
+        <%= totalBookmark  %> Bookmarks
+      </p>
+    </div>
+  </div>
+
+  <a href="/blogs/<%= blogId %>" title="<%= title %>" class="card-link"></a>
+  <div class="state-layer"></div>
+</div>

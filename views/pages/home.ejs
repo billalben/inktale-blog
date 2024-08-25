@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('../layouts/head', {title: 'Home | Inktale'}) %>
+    <%- include('../layouts/head', { title: 'Home | Inktale' }) %>
 
     <script src="/js/script.js" defer></script>
   </head>
@@ -10,7 +10,24 @@
     <%- include('../partials/top_app_bar') %>
 
     <!-- #MAIN -->
-    <main class="main"></main>
+    <main class="main">
+      <!-- #HOME -->
+      <article class="page home-page">
+        <h2 class="headline-small page-title text-on-surface">Latest Blogs</h2>
+
+        <div class="blog-list">
+          <% if (locals.latestBlogs.length) { %>
+            <% locals.latestBlogs.forEach(blog => {%>
+              <%- include('../partials/card',{ blog }) %>
+            <% }) %>
+          <% } %>
+        </div>
+
+        <% if (locals.pagination.next || locals.pagination.prev) { %>
+          <%- include('../partials/pagination') %>
+        <% } %>
+      </article>
+    </main>
 
     <!-- #FOOTER -->
     <%- include('../layouts/footer') %>
