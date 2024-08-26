@@ -12,13 +12,14 @@ const { connectDB, disconnectDB } = require("./src/config/mongoose_config");
 const home = require("./src/routes/home_route");
 const createBlog = require("./src/routes/create_blog_route");
 const logout = require("./src/routes/logout_route");
+const blogDetail = require("./src/routes/blog_detail_route");
 
 const userAuth = require("./src/middlewares/user_auth_middleware");
 
 // Initialize express
 const app = express();
 
-// Set public directory as the static folder
+// Set the view engine to ejs and the views directory
 app.set("view engine", "ejs");
 app.set("views", `${__dirname}/src/views`);
 
@@ -26,7 +27,7 @@ app.set("views", `${__dirname}/src/views`);
 app.use(express.urlencoded({ extended: true }));
 
 // Parse JSON bodies (as sent by API clients)
-app.use(express.json({ limit: "10mb" }));
+app.use(express.json({ limit: "6mb" }));
 
 // Instance for session storage
 const store = new MongoStore({
@@ -54,6 +55,8 @@ app.use("/register", register);
 app.use("/login", login);
 app.use("/", home);
 app.use("/logout", logout);
+
+app.use('/blogs', blogDetail)
 
 // Middleware to check if the user is authenticated
 app.use(userAuth);

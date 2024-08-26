@@ -1,0 +1,130 @@
+<% 
+  const {
+    _id: currentBlogId,
+    banner: {
+      url: bannerURL
+    },
+    title,
+    content,
+    owner: {
+      name: authorName,
+      username: authorUsername,
+      profilePhoto: {
+        url: profilePhotoUrl
+      } = {},
+    },
+    reaction,
+    readingTime,
+    totalBookmark,
+    createdAt,
+  } = locals.blog;
+
+  const compressBannerURL = bannerURL?.replace('upload/', 'upload/w_960,h_420,c_auto/q_auto/f_auto/');
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../layouts/head', {title: `${title} | Inktale`}) %>
+
+    <script src="/js/script.js" defer></script>
+  </head>
+  <body>
+    <!-- #TOP APP BAR -->
+    <%- include('../partials/top_app_bar') %>
+
+    <!-- #MAIN -->
+    <main class="main">
+      <!-- #BLOG DETAIL -->
+      <div class="page blog-detail-page">
+        <div class="container">
+          <article class="blog-detail">
+            <figure class="blog-banner img-holder">
+              <img src="<%= compressBannerURL %>" width="960" height="420" alt="<%= title %>" class="img-cover">
+            </figure>
+
+            <div class="blog-author">
+              <p class="avatar title-medium"><%= authorName.at() %></p>
+
+              <div class="leading-text">
+                <a href="/profile/<%= authorUsername %>" class="title-medium text-on-surface text-link">
+                  <%= authorName %>
+                </a>
+                <p class="body-small text-on-surface-variant">
+                  Posted on <%= new Date(createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric',}) %>
+                </p>
+              </div>
+
+              <% if (authorUsername === locals.sessionUser?.username) { %>
+                <a href="/blogs/<%= currentBlogId %>/edit" class="btn filled-tonal">
+                  <span class="material-symbols-rounded leading-icon" aria-hidden="true">
+                    edit
+                  </span>
+                  <p class="label-large">Edit</p>
+                  <div class="state-layer"></div>
+                </a>
+              <% } %>
+            </div>
+
+            <div class="blog-content">
+              <h1 class="title headline-large text-on-surface">
+                <%= title %>
+              </h1>
+              <div class="content-markdown text-on-surface-variant">
+                <%- content %>
+              </div>
+            </div>
+
+            <div class="blog-actions">
+              <div class="action-item">
+                <button class="icon-btn filled-tonal" data-reaction-btn>
+                  <span class="material-symbols-rounded leading-icon" aria-hidden="true">
+                    favorite
+                  </span>
+                  <div class="state-layer"></div>
+                </button>
+  
+                <p class="lable-large text-on-surface-variant">
+                  <span data-reaction-number><%= reaction %></span>
+                  Reactions
+                </p>
+              </div>
+
+              <div class="action-item">
+                <button class="icon-btn filled-tonal" data-reading-list-btn>
+                  <span class="material-symbols-rounded leading-icon" aria-hidden="true">
+                    bookmark
+                  </span>
+                  <div class="state-layer"></div>
+                </button>
+  
+                <p class="lable-large text-on-surface-variant">
+                  <span data-reading-list-number><%= totalBookmark %></span>
+                  Bookmarks
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- #MORE BLOGS -->
+          <% if (locals.ownerBlogs.length) { %>
+            <section class="more-blog">
+              <h2 class="title title-large text-o-surface">
+                Read Next
+              </h2>
+
+              <div class="blog-list">
+                <% locals.ownerBlogs.forEach(blog => { %>
+                  <%- include('../partials/card', { blog }) %>
+                <% }) %>
+              </div>
+            </section>
+          <% } %>
+        </div>
+      </div>
+    </main>
+
+    <!-- #FOOTER -->
+    <%- include('../layouts/footer') %>
+  </body>
+</html>
