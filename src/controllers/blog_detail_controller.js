@@ -3,6 +3,7 @@
 const mongoose = require("mongoose");
 
 const Blog = require("../models/blog_model");
+const markdown = require("../config/markdown_it_config");
 
 /**
  * Retrieve and render the blog detail page
@@ -49,6 +50,7 @@ const renderBlogDetail = async (req, res) => {
       sessionUser: req.session.user,
       blog,
       ownerBlogs,
+      markdown,
     });
 
   } catch (error) {
