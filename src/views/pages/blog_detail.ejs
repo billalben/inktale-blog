@@ -20,6 +20,11 @@
   } = locals.blog;
 
   const compressBannerURL = bannerURL?.replace('upload/', 'upload/w_960,h_420,c_auto/q_auto/f_auto/');
+
+  const {
+    readingList: userReadingListedBlogs,
+    reactedBlogs: userReactedBlogs,
+  } = locals.user || {};
 %>
 
 <!DOCTYPE html>
@@ -27,6 +32,7 @@
   <head>
     <%- include('../layouts/head', {title: `${title} | Inktale`}) %>
 
+    <script type="module" src="/js/reaction.js"></script>
     <script src="/js/script.js" defer></script>
 
     <!-- highlight.js cdn link -->
@@ -83,7 +89,10 @@
 
             <div class="blog-actions">
               <div class="action-item">
-                <button class="icon-btn filled-tonal" data-reaction-btn>
+                <button 
+                  class="icon-btn filled-tonal <%= userReactedBlogs?.includes(currentBlogId) ? 'active' : '' %>" 
+                  data-reaction-btn
+                >
                   <span class="material-symbols-rounded icon" aria-hidden="true">
                     favorite
                   </span>
