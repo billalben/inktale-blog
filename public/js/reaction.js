@@ -1,5 +1,7 @@
 "use strict";
 
+import dialog from "./utils/dialog.js";
+
 // Select the reaction button element and reaction number
 const $reactionBtn = document.querySelector("[data-reaction-btn]");
 const $reactionNumber = document.querySelector("[data-reaction-number]");
@@ -31,7 +33,12 @@ const addReaction = async () => {
 
     // Handle case where user is not authenticated (status code 401)
     if (response.status === 401) {
-      console.log("need to login");
+      const $dialog = dialog({
+        title: "Login to continue",
+        content: `We're a place where coders share, stay up-to-date and grow their careers.`,
+      });
+
+      document.body.appendChild($dialog);
     }
   } catch (error) {
     console.error("Error adding reaction", error.message);
@@ -63,7 +70,12 @@ const removeReaction = async () => {
 
     // Handle case where user is not authenticated (status code 401)
     if (response.status === 401) {
-      console.log("need to login");
+      const $dialog = dialog({
+        title: "Login to continue",
+        content: `We're a place where coders share, stay up-to-date and grow their careers.`,
+      });
+
+      document.body.appendChild($dialog);
     }
   } catch (error) {
     console.error("Error removing reaction", error.message);
