@@ -2,6 +2,9 @@
 
 const User = require("../models/user_model");
 const Blog = require("../models/blog_model");
+const req = require("express/lib/request");
+
+const getPagination = require("../utils/get_pagination-util");
 
 /**
  * Add a blog post to the reading list of the logged-in user and update the total bookmark count of the blog.
@@ -83,7 +86,49 @@ const RemoveFromReadingList = async (req, res) => {
   }
 };
 
+const renderReadingList = async (req, res) => {
+  try {
+    // Retrieve logged client username
+    const { username } = req.session.user;
+
+    // Retrieve total amount of reading list blogs
+    const { readingList } = await User.findOne({ username }).select(
+      "readingList"
+    );
+
+    // Get pagination object
+    const pagination = getPagination(
+      "/reading-list/",
+      req.params,
+      1,
+      readingList.length
+    );
+
+    // Retrieve reading list blogs based on pagination parameters
+    const readingListBlogs = await Blog.find({
+      _id: { $in: readingList },
+    })
+      .select("owner createdAt readingTime title reaction totalBookmark")
+      .populate({
+        path: "owner",
+        select: "name username profilePhoto",
+      })
+      .skip(pagination.skip)
+      .limit(pagination.limit);
+
+    res.render("./pages/reading_list", {
+      sessionUser: req.session.user,
+      readingListBlogs,
+      pagination,
+    });
+  } catch (error) {
+    console.error("Error rendering reading list", error.message);
+    throw error;
+  }
+};
+
 module.exports = {
   addToReadingList,
   RemoveFromReadingList,
+  renderReadingList,
 };
