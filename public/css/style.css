@@ -1466,6 +1466,30 @@ body:has(.dialog-root.active) {
   margin-block: var(--space-5);
 }
 
+/* ============= #404 PAGE ============= */
+
+.not-found-page .container {
+  min-height: calc(
+    100vh - var(--top-app-bar-height) - var(--footer-height) - var(--space-12)
+  );
+  min-height: calc(
+    100dvh - var(--top-app-bar-height) - var(--footer-height) - var(--space-12)
+  );
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  text-align: center;
+  gap: var(--space-3);
+}
+
+.text-404 {
+  max-width: 34ch;
+}
+
+.not-found-page .btn-fill {
+  margin-block-start: var(--space-1);
+}
+
 /* ============= #RESPONSIVE ============= */
 /* Responsive for larger than 768px screen */
 @media (min-width: 768px) {
