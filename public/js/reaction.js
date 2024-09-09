@@ -19,7 +19,7 @@ const $reactionNumber = document.querySelector("[data-reaction-number]");
 const addReaction = async () => {
   try {
     // Send a PUT request to the reactions endpoint
-    const response = await fetch(`${window.location}/reactions`, {
+    const response = await fetch(`${window.location.href}/reactions`, {
       method: "PUT",
     });
 
@@ -56,7 +56,7 @@ const addReaction = async () => {
 const removeReaction = async () => {
   try {
     // Send a DELETE request to the reactions endpoint
-    const response = await fetch(`${window.location}/reactions`, {
+    const response = await fetch(`${window.location.href}/reactions`, {
       method: "DELETE",
     });
 

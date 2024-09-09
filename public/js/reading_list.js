@@ -13,7 +13,7 @@ const $readingListNumber = document.querySelector("[data-reading-list-number]");
 const addToReadingList = async () => {
   try {
     // Send a PUT request to the readingList endpoint
-    const response = await fetch(`${window.location}/reading-list`, {
+    const response = await fetch(`${window.location.href}/reading-list`, {
       method: "PUT",
     });
 
@@ -47,7 +47,7 @@ const addToReadingList = async () => {
 const removeFromReadingList = async () => {
   try {
     // Send a DELETE request to the reading list endpoint
-    const response = await fetch(`${window.location}/reading-list`, {
+    const response = await fetch(`${window.location.href}/reading-list`, {
       method: "DELETE",
     });
 
