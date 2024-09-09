@@ -13,8 +13,9 @@ const home = require("./src/routes/home_route");
 const createBlog = require("./src/routes/create_blog_route");
 const logout = require("./src/routes/logout_route");
 const blogDetail = require("./src/routes/blog_detail_route");
-const readingList = require('./src/routes/reading_list_route');
+const readingList = require("./src/routes/reading_list_route");
 const blogUpdate = require("./src/routes/blog_update_route");
+const profile = require("./src/routes/profile_route");
 
 const userAuth = require("./src/middlewares/user_auth_middleware");
 
@@ -58,14 +59,16 @@ app.use("/login", login);
 app.use("/", home);
 app.use("/logout", logout);
 
-app.use('/blogs', blogDetail)
+app.use("/blogs", blogDetail);
+
+app.use("/profile", profile);
 
 // Middleware to check if the user is authenticated
 app.use(userAuth);
 
 app.use("/create-blog", createBlog);
 
-app.use('/reading-list', readingList);
+app.use("/reading-list", readingList);
 
 app.use("/blogs", blogUpdate);
 

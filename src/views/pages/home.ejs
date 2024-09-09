@@ -13,19 +13,21 @@
     <main class="main">
       <!-- #HOME -->
       <article class="page home-page">
-        <h2 class="headline-small page-title text-on-surface">Latest Blogs</h2>
+        <div class="container">
+          <h2 class="headline-small page-title text-on-surface">Latest Blogs</h2>
 
-        <div class="blog-list">
-          <% if (locals.latestBlogs.length) { %>
-            <% locals.latestBlogs.forEach(blog => {%>
-              <%- include('../partials/card',{ blog }) %>
-            <% }) %>
+          <div class="blog-list">
+            <% if (locals.latestBlogs.length) { %>
+              <% locals.latestBlogs.forEach(blog => {%>
+                <%- include('../partials/card',{ blog }) %>
+              <% }) %>
+            <% } %>
+          </div>
+
+          <% if (locals.pagination.next || locals.pagination.prev) { %>
+            <%- include('../partials/pagination') %>
           <% } %>
         </div>
-
-        <% if (locals.pagination.next || locals.pagination.prev) { %>
-          <%- include('../partials/pagination') %>
-        <% } %>
       </article>
     </main>
 

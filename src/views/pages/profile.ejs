@@ -1,0 +1,97 @@
+<% 
+  const {
+    profilePhoto: {
+      url: profilePhotoURL = "/images/user-default.jpg",
+    } = {},
+    name: profileName,
+    username: profileUsername,
+    bio,
+    blogPublished,
+    createdAt,
+  } = locals.profile;
+
+  const compressProfilePhotoURL = profilePhotoURL?.replace("upload/", "upload/w_200,h_200,c_auto/q_auto/f_auto");
+%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../layouts/head', { title: `${profileName} | Inktale` }) %>
+
+    <script src="/js/script.js" defer></script>
+  </head>
+  <body>
+    <!-- #TOP APP BAR -->
+    <%- include('../partials/top_app_bar') %>
+
+    <!-- #MAIN -->
+    <main class="main">
+      <!-- #PROFILE -->
+      <article class="page profile-page">
+        <div class="container">
+          <div class="profile-card">
+            <figure class="profile-image img-holder">
+              <img src="<%= profilePhotoURL %>" width="200" height="200" alt="<%= profileName %>" class="img-cover">
+            </figure>
+
+            <div class="profile-content">
+              <h3 class="title headline-medium text-on-surface">
+                <%= profileName %>
+              </h3>
+
+              <p class="bio body-large text-on-surface-variant">
+                <%= bio || '404 bio not found!' %>
+              </p>
+
+              <div class="profile-meta-list">
+                <div class="profile-meta-item text-on-surface-variant">
+                  <span class="material-symbols-rounded" aria-hidden="true">
+                    calendar_month
+                  </span>
+                  <p class="body-large text-on-surface-variant">
+                    Member since <%= new Date(createdAt).toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric'}) %>
+                  </p>
+                </div>
+
+                <div class="profile-meta-item text-on-surface-variant">
+                  <span class="material-symbols-rounded" aria-hidden="true">
+                    article
+                  </span>
+                  <p class="body-large text-on-surface-variant">
+                    <%= blogPublished %> blogs published
+                  </p>
+                </div>
+              </div>
+
+              <% if (profileUsername === locals.sessionUser?.username) { %>
+                <a href="/settings" class="btn filled-tonal">
+                  <span class="material-symbols-rounded" aria-hidden="true">
+                    edit_square
+                  </span>
+                  <p class="label-large">Edit profile</p>
+                  <div class="state-layer"></div>
+                </a>
+              <% } %>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="blog-list">
+            <% if (locals.profileBlogs.length) { %>
+              <% locals.profileBlogs.forEach(blog => {%>
+                <%- include('../partials/card',{ blog }) %>
+              <% }) %>
+            <% } %>
+          </div>
+
+          <% if (locals.pagination.next || locals.pagination.prev) { %>
+            <%- include('../partials/pagination') %>
+          <% } %>
+        </div>
+      </article>
+    </main>
+
+    <!-- #FOOTER -->
+    <%- include('../layouts/footer') %>
+  </body>
+</html>
