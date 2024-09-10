@@ -1,0 +1,101 @@
+<%
+  const {
+    blogs,
+    blogPublished,
+    totalReactions,
+    totalVisits,
+  } = locals.loggedUser;
+%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../layouts/head', { title: 'Dashboard | Inktale' }) %>
+
+    <script src="/js/script.js" defer></script>
+  </head>
+  <body>
+    <!-- #TOP APP BAR -->
+    <%- include('../partials/top_app_bar') %>
+
+    <main class="main">
+      <!-- #DASHBOARD -->
+      <article class="page dashboard-page">
+        <div class="container">
+          <h2 class="headline-small page-title text-on-surface">Dashboard</h2>
+
+          <!-- Analytics section -->
+            <section class="analytics-list">
+              <div class="analytics-card">
+                <div class="analytics-icon-box">
+                  <span class="material-symbols-rounded" aria-hidden="true">
+                    visibility
+                  </span>
+                </div>
+                <div>
+                  <h3 class="display-medium text-on-surface card-title">
+                    <%= totalVisits.toLocaleString("en-US") %>
+                  </h3>
+                  <p class="title-medium text-on-surface-variant">
+                    Total Visits
+                  </p>
+                </div>
+              </div>
+
+              <div class="analytics-card">
+                <div class="analytics-icon-box">
+                  <span class="material-symbols-rounded" aria-hidden="true">
+                    favorite
+                  </span>
+                </div>
+                <div>
+                  <h3 class="display-medium text-on-surface card-title">
+                    <%= totalReactions.toLocaleString("en-US") %>
+                  </h3>
+                  <p class="title-medium text-on-surface-variant">
+                    Total Reactions
+                  </p>
+                </div>
+              </div>
+
+              <div class="analytics-card">
+                <div class="analytics-icon-box">
+                  <span class="material-symbols-rounded" aria-hidden="true">
+                    article
+                  </span>
+                </div>
+                <div>
+                  <h3 class="display-medium text-on-surface card-title">
+                    <%= blogPublished.toLocaleString("en-US") %>
+                  </h3>
+                  <p class="title-medium text-on-surface-variant">
+                    Article Published
+                  </p>
+                </div>
+              </div>
+            </section>
+
+          <!-- Published blogs -->
+          <section>
+            <h2 class="title-large title text-on-surface">Posts</h2>
+            <div class="post-lists">
+              <% if (blogs.length) { %>
+                <% blogs.forEach(blog => { %>
+                  <%- include('../partials/list_item',{ blog }) %>
+                <% }) %>
+              <% } else { %>
+                <div class="list-item">
+                  <p class="text-on-surface-variant body-large">
+                    You haven't written any blog yet.
+                  </p>
+                </div>
+              <% } %>
+            </div>
+          </section>
+        </div>
+      </article>
+    </main>
+
+    <!-- #FOOTER -->
+    <%- include('../layouts/footer') %>
+  </body>
+</html>

@@ -16,6 +16,7 @@ const blogDetail = require("./src/routes/blog_detail_route");
 const readingList = require("./src/routes/reading_list_route");
 const blogUpdate = require("./src/routes/blog_update_route");
 const profile = require("./src/routes/profile_route");
+const dashboard = require("./src/routes/dashboard_route");
 
 const userAuth = require("./src/middlewares/user_auth_middleware");
 
@@ -71,6 +72,8 @@ app.use("/create-blog", createBlog);
 app.use("/reading-list", readingList);
 
 app.use("/blogs", blogUpdate);
+
+app.use("/dashboard", dashboard);
 
 /*
  * Start the server
