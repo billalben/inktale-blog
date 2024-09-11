@@ -6,9 +6,10 @@ require("dotenv").config();
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
+const { connectDB, disconnectDB } = require("./src/config/mongoose_config");
+
 const register = require("./src/routes/register_route");
 const login = require("./src/routes/login_route");
-const { connectDB, disconnectDB } = require("./src/config/mongoose_config");
 const home = require("./src/routes/home_route");
 const createBlog = require("./src/routes/create_blog_route");
 const logout = require("./src/routes/logout_route");
@@ -17,6 +18,7 @@ const readingList = require("./src/routes/reading_list_route");
 const blogUpdate = require("./src/routes/blog_update_route");
 const profile = require("./src/routes/profile_route");
 const dashboard = require("./src/routes/dashboard_route");
+const deleteBlog = require("./src/routes/delete_blog_route");
 
 const userAuth = require("./src/middlewares/user_auth_middleware");
 
@@ -71,7 +73,7 @@ app.use("/create-blog", createBlog);
 
 app.use("/reading-list", readingList);
 
-app.use("/blogs", blogUpdate);
+app.use("/blogs", blogUpdate, deleteBlog);
 
 app.use("/dashboard", dashboard);
 
