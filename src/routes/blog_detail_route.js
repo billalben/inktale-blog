@@ -18,6 +18,8 @@ const {
   RemoveFromReadingList,
 } = require("../controllers/reading_list_controller");
 
+const updateVisit = require("../controllers/visit_controller");
+
 // GET Route: Render The Create Blog Page
 router.get("/:blogId", renderBlogDetail);
 
@@ -32,5 +34,8 @@ router.put("/:blogId/reading-list", addToReadingList);
 
 // DELETE Route: Remove the blog from the user's reading list
 router.delete("/:blogId/reading-list", RemoveFromReadingList);
+
+// PUT Route: Update blog visit count
+router.put("/:blogId/visit", updateVisit);
 
 module.exports = router;
