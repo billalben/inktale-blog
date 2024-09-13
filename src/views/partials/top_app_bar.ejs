@@ -1,4 +1,13 @@
-<% const { userAuthenticated, name, username } = locals.sessionUser || {}; %>
+<%
+  const { 
+    userAuthenticated,
+    name,
+    username,
+    profilePhotoURL
+  } = locals.sessionUser || {};
+
+  const compressedProfilePhotoURL = profilePhotoURL?.replace("upload/", "upload/w_40,h_40,c_auto/q_auto/f_auto/");
+%>
 
 <header class="top-app-bar" data-top-app-bar="">
   <% if (locals.route === '/create-blog') { %>
@@ -44,14 +53,22 @@
     <div class="menu-wrapper" data-menu-wrapper>
       <button class="icon-btn" data-menu-toggler>
         <div class="avatar">
-          <div class="title-medium"><%= name.at() %></div>
+          <% if (compressedProfilePhotoURL) { %>
+            <img src="<%= compressedProfilePhotoURL %>" width="40" height="40" alt="<%= name %>" class="img-cover">  
+          <% } else { %>
+            <p class="title-medium"><%= name.at() %></p>
+          <% } %>
         </div>
       </button>
 
       <div class="menu" data-menu="">
         <div class="list-item small">
           <div class="avatar">
-            <div class="title-medium"><%= name.at() %></div>
+            <% if (compressedProfilePhotoURL) { %>
+              <img src="<%= compressedProfilePhotoURL %>" width="40" height="40" alt="<%= name %>" class="img-cover">  
+            <% } else { %>
+              <p class="title-medium"><%= name.at() %></p>
+            <% } %>
           </div>
 
           <div>

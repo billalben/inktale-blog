@@ -9,8 +9,8 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema(
   {
     profilePhoto: {
-      type: String,
-      public_id: String,
+      url: { type: String },
+      public_id: { type: String },
     },
     name: {
       type: String,

@@ -8,6 +8,8 @@
     email,
     bio,
   } = locals.currentUser;
+
+  const compressedProfilePhotoURL = profilePhotoURL?.replace("upload/", "upload/w_200,h_200,c_auto/q_auto/f_auto/");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +17,7 @@
     <%- include('../layouts/head', { title: 'Settings | Inktale' }) %>
 
     <script src="/js/script.js" defer></script>
+    <script type="module" src="/js/settings.js"></script>
   </head>
   <body>
     <!-- #TOP APP BAR -->
@@ -41,12 +44,18 @@
 
                 <div class="image-field-wrapper avatar-image-field">
                   <label for="profilePhoto" class="label label-large text-on-surface-variant">
-                    <input type="file" name="profilePhoto" id="profilePhoto" accept="image/png, image/jpeg, image/jpg" data-image-filed>
+                    <input type="file" name="profilePhoto" id="profilePhoto" accept="image/png, image/jpeg, image/jpg" data-image-field>
                     <span class="material-symbols-rounded leading-icon">cloud_upload</span>
                     Upload a photo
                   </label>
 
-                  <div class="image-preview" data-image-preview></div>
+                  <% if (compressedProfilePhotoURL) { %>
+                    <div class="image-preview show" data-image-preview>
+                      <img src="<%= compressedProfilePhotoURL %>" width="200" height="200" alt="<%= name %>" class="img-cover"> 
+                    </div>
+                  <% } else { %>
+                    <div class="image-preview" data-image-preview></div>
+                  <% } %>
 
                   <button type="button" class="icon-btn filled-tonal" data-image-preview-clear>
                     <span class="material-symbols-rounded">delete</span>

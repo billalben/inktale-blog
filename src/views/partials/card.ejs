@@ -8,6 +8,9 @@
     owner: {
       username,
       name,
+      profilePhoto: {
+        url: profilePhotoURL,
+      } = {},
     },
     createdAt,
     readingTime,
@@ -19,6 +22,8 @@
    * Compress the banner image URL using Cloudinary's image transformation API.
    */
   const compressedBannerURL = bannerURL?.replace('upload/', 'upload/w_360,h_155,c_auto/q_auto/f_auto/');
+
+  const compressedProfilePhotoURL = profilePhotoURL?.replace('upload/', 'upload/w_40,h_40,c_auto/q_auto/f_auto/');
 %>
 
 <div class="card">
@@ -31,7 +36,11 @@
   <div class="card-content">
     <div class="card-meta">
       <div class="avatar">
-        <p class="title-medium"><%= name.at() %></p>
+        <% if (compressedProfilePhotoURL) { %>
+          <img src="<%= compressedProfilePhotoURL %>" width="32" height="32" alt="<%= name %>" class="img-cover">  
+        <% } else { %>
+          <p class="title-medium"><%= name.at() %></p>
+        <% } %>
       </div>
 
       <div>

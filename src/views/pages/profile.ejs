@@ -1,16 +1,16 @@
-<% 
+<%
   const {
     profilePhoto: {
-      url: profilePhotoURL = "/images/user-default.jpg",
+      url: profilePhotoURL = "/images/user-default.jpg"
     } = {},
     name: profileName,
     username: profileUsername,
     bio,
     blogPublished,
-    createdAt,
+    createdAt
   } = locals.profile;
 
-  const compressProfilePhotoURL = profilePhotoURL?.replace("upload/", "upload/w_200,h_200,c_auto/q_auto/f_auto");
+  const compressedProfilePhotoURL = profilePhotoURL?.replace("upload/", "upload/w_200,h_200,c_auto/q_auto/f_auto/");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +30,7 @@
         <div class="container">
           <div class="profile-card">
             <figure class="profile-image img-holder">
-              <img src="<%= profilePhotoURL %>" width="200" height="200" alt="<%= profileName %>" class="img-cover">
+              <img src="<%= compressedProfilePhotoURL %>" width="200" height="200" alt="<%= profileName %>" class="img-cover">
             </figure>
 
             <div class="profile-content">
