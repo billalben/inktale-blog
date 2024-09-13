@@ -480,6 +480,10 @@ button {
   text-decoration: underline;
 }
 
+.text-error {
+  color: var(--error);
+}
+
 /* ============= #Reused Style ============= */
 .container {
   padding-inline: var(--space-4);
@@ -725,6 +729,12 @@ button {
 .btn-text.error {
   color: var(--error);
   --state-layer-background: var(--error);
+}
+
+.btn-fill.error {
+  background-color: var(--error);
+  color: var(--on-error);
+  --state-layer-background: var(--on-error);
 }
 
 /* +++ Snackbar +++ */
@@ -1548,7 +1558,7 @@ body:has(.dialog-root.active) {
   background-color: var(--surface-container-highest);
   border-radius: var(--radius-medium);
 }
-
+ 
 .analytics-icon-box {
   width: 56px;
   height: 56px;
@@ -1576,6 +1586,73 @@ body:has(.dialog-root.active) {
 
 .post-lists .list-item:not(:last-child) {
   border-block-end: 1px solid var(--outline-variant);
+}
+
+/* ============= #SETTINGS ============= */
+
+.settings-wrapper {
+  margin-block-start: var(--space-4);
+}
+
+.settings-card {
+  padding: var(--space-4);
+  background-color: var(--surface-container-highest);
+  border-radius: var(--radius-large);
+}
+
+.settings-card:not(:last-child) {
+  margin-block-end: var(--space-2);
+}
+
+.settings-wrapper .title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  margin-block-end: var(--space-4);
+}
+
+.avatar-image-field {
+  width: 160px;
+  height: 160px;
+  border-radius: var(--radius-full);
+  margin-block-start: var(--space-3);
+  border-color: var(--outline);
+  overflow: visible;
+}
+
+.avatar-image-field .label {
+  inset: 0;
+  translate: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--space-2);
+  pointer-events: initial;
+  cursor: pointer;
+}
+
+.avatar-image-field:has(.image-preview.show) .label {
+  display: none;
+}
+
+.avatar-image-field .image-preview {
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-full);
+}
+
+.avatar-image-field .icon-btn {
+  top: 0;
+  right: 0;
+}
+
+.settings-form .text-field-wrapper {
+  margin-block-start: var(--space-5);
+  background-color: var(--surface-container-highest);
+}
+
+.settings-card .card-text {
+  margin-block: var(--space-3) var(--space-4);
 }
 
 /* ============= #RESPONSIVE ============= */

@@ -1,6 +1,7 @@
 "use strict";
 
 const express = require("express");
+const path = require("path");
 require("dotenv").config();
 
 const session = require("express-session");
@@ -19,6 +20,7 @@ const blogUpdate = require("./src/routes/blog_update_route");
 const profile = require("./src/routes/profile_route");
 const dashboard = require("./src/routes/dashboard_route");
 const deleteBlog = require("./src/routes/delete_blog_route");
+const settings = require("./src/routes/settings_route");
 
 const userAuth = require("./src/middlewares/user_auth_middleware");
 
@@ -27,7 +29,7 @@ const app = express();
 
 // Set the view engine to ejs and the views directory
 app.set("view engine", "ejs");
-app.set("views", `${__dirname}/src/views`);
+app.set("views", path.join(__dirname, "src/views"));
 
 // Parse url-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded({ extended: true }));
@@ -46,8 +48,8 @@ const store = new MongoStore({
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: false, // Don't save session if unmodified
+    saveUninitialized: false, // Don't create session until something stored
     store,
     cookie: {
       maxAge: Number(process.env.SESSION_MAX_AGE),
@@ -55,7 +57,7 @@ app.use(
   })
 );
 
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/register", register);
 app.use("/login", login);
@@ -76,6 +78,8 @@ app.use("/reading-list", readingList);
 app.use("/blogs", blogUpdate, deleteBlog);
 
 app.use("/dashboard", dashboard);
+
+app.use("/settings", settings);
 
 /*
  * Start the server
