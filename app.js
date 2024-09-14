@@ -87,9 +87,9 @@ app.use("/settings", settings);
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, async () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-
   await connectDB(process.env.MONGO_CONNECTION_URI);
+
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 server.on("close", async () => await disconnectDB());

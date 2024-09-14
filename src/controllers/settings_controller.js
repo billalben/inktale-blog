@@ -1,8 +1,10 @@
 "use strict";
 
 const User = require("../models/user_model");
+const Blog = require("../models/blog_model");
 
 const bycrypt = require("bcrypt");
+const mongoose = require("mongoose");
 
 const uploadToCloudinary = require("../config/cloudinary_config");
 
@@ -150,4 +152,45 @@ const updatePassword = async (req, res) => {
   }
 };
 
-module.exports = { renderSettings, updateBasicInfo, updatePassword };
+/**
+ * Delete the current user account
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
+ * @throws {Error} - Throws error if there is an issue Deleting user account.
+ */
+const deleteAccount = async (req, res) => {
+  try {
+    // Retrieve logged client username from session
+    const { username } = req.session.user;
+
+    // Retrieve current user based on session username
+    const currentUser = await User.findOne({ username }).select("blogs");
+
+    // Delete all blogs that current user published
+    await Blog.deleteMany({ _id: { $in: currentUser.blogs } });
+
+    // Delete current user account
+    await User.deleteOne({ username });
+
+    // Destroy current user session from all devices
+    const Session = mongoose.connection.db.collection("sessions");
+
+    // Delete session from database
+    await Session.deleteMany({ session: { $regex: username, $options: "i" } });
+
+    // Destroy session from client device
+    req.session.destroy();
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error deleting account: ", error.message);
+    throw error;
+  }
+};
+
+module.exports = {
+  renderSettings,
+  updateBasicInfo,
+  updatePassword,
+  deleteAccount,
+};

@@ -6,6 +6,7 @@ const {
   renderSettings,
   updateBasicInfo,
   updatePassword,
+  deleteAccount,
 } = require("../controllers/settings_controller");
 
 // GET route: render the settings page
@@ -16,5 +17,8 @@ router.put("/basic-info", updateBasicInfo);
 
 // PUT route: update user password
 router.put("/password", updatePassword);
+
+// DELETE route: delete user account
+router.delete("/account", deleteAccount);
 
 module.exports = router;

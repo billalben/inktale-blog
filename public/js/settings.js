@@ -174,3 +174,39 @@ const updatePassword = async (event) => {
 };
 
 $passwordForm.addEventListener("submit", updatePassword);
+
+/**
+ * Account delete functionality
+ */
+
+const $accountDeleteBtn = document.querySelector("[data-account-delete]");
+
+const deleteAccount = async () => {
+  // Show a confirmation dialog for account delete
+  const confirmDelete = confirm(
+    "Are you sure you want to delete your account?"
+  );
+
+  // Handle case where user deny to delete account
+  if (!confirmDelete) return;
+
+  // Disable account delete button to prevent multiple request
+  $accountDeleteBtn.setAttribute("disabled", "");
+
+  // Show progress bar
+  $progressBar.classList.add("loading");
+
+  // Send account delete request to the server
+  const response = await fetch(`${window.location.href}/account`, {
+    method: "DELETE",
+  });
+
+  // Handle case where response is successful
+  if (response.ok) {
+    $progressBar.classList.add("loading-end");
+    // Redirect user to home page
+    window.location = `${window.location.origin}/`;
+  }
+};
+
+$accountDeleteBtn.addEventListener("click", deleteAccount);
