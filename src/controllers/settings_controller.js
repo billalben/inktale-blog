@@ -2,6 +2,8 @@
 
 const User = require("../models/user_model");
 
+const bycrypt = require("bcrypt");
+
 const uploadToCloudinary = require("../config/cloudinary_config");
 
 /**
@@ -104,4 +106,48 @@ const updateBasicInfo = async (req, res) => {
   }
 };
 
-module.exports = { renderSettings, updateBasicInfo };
+/**
+ * Update password for the logged user.
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @throws {Error} - Throws error if there is an issue updating password.
+ */
+const updatePassword = async (req, res) => {
+  try {
+    // Retrieve logged client username from session
+    const { username: sessionUsername } = req.session.user;
+
+    // Retrieve current user based on session username
+    const currentUser = await User.findOne({
+      username: sessionUsername,
+    }).select("password");
+
+    // Destructure properties from request body
+    const { old_password, password } = req.body;
+
+    // Validate the old password
+    const oldPasswordIsValid = await bycrypt.compare(
+      old_password,
+      currentUser.password
+    );
+
+    // Handle case where old password is invalid
+    if (!oldPasswordIsValid) {
+      return res.status(400).json({
+        message: "Old password is incorrect. Please try again.",
+      });
+    }
+
+    // Hash the new password and assign the currentUser password
+    currentUser.password = await bycrypt.hash(password, 10);
+    await currentUser.save();
+
+    // Send a response indicating success
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error updating password: ", error.message);
+    throw error;
+  }
+};
+
+module.exports = { renderSettings, updateBasicInfo, updatePassword };

@@ -5,12 +5,16 @@ const router = require("express").Router();
 const {
   renderSettings,
   updateBasicInfo,
+  updatePassword,
 } = require("../controllers/settings_controller");
 
-// GET Route: Render the settings page
+// GET route: render the settings page
 router.get("/", renderSettings);
 
-// PUT Route: Update user profile
+// PUT route: update user profile
 router.put("/basic-info", updateBasicInfo);
+
+// PUT route: update user password
+router.put("/password", updatePassword);
 
 module.exports = router;

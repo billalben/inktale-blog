@@ -115,3 +115,62 @@ const updateBasicInfo = async (event) => {
 };
 
 $basicInfoForm.addEventListener("submit", updateBasicInfo);
+
+/**
+ * Update password functionality
+ */
+
+const $passwordForm = document.querySelector("[data-password-form]");
+const $passwordSubmit = document.querySelector("[data-password-submit]");
+
+const updatePassword = async (event) => {
+  // Prevent form submission
+  event.preventDefault();
+
+  // Disable the submit button to prevent multiple submissions
+  $passwordSubmit.setAttribute("disabled", "");
+
+  // Create a new FormData object to capture form data
+  const formData = new FormData($passwordForm);
+
+  // Handle case where password and confirm password do not match
+  if (formData.get("password") !== formData.get("confirm_password")) {
+    $passwordSubmit.removeAttribute("disabled");
+    Snackbar({
+      type: "error",
+      message: "Please ensure your password and confirm password match.",
+    });
+    return;
+  }
+
+  // Create request body from formData object
+  const body = Object.fromEntries(formData.entries());
+
+  // Show progress bar
+  $progressBar.classList.add("loading");
+
+  // Send a PUT request to update password
+  const response = await fetch(`${window.location.href}/password`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  // Handle case where response is successful
+  if (response.ok) {
+    $passwordSubmit.removeAttribute("disabled");
+    $progressBar.classList.add("loading-end");
+    Snackbar({ message: "Password has been updated." });
+    return;
+  }
+
+  // Handle case where response status is 400 (Bad Request)
+  if (response.status === 400) {
+    $passwordSubmit.removeAttribute("disabled");
+    $progressBar.classList.remove("loading");
+    const { message } = await response.json();
+    Snackbar({ type: "error", message });
+  }
+};
+
+$passwordForm.addEventListener("submit", updatePassword);
