@@ -100,7 +100,7 @@ const renderReadingList = async (req, res) => {
     const pagination = getPagination(
       "/reading-list/",
       req.params,
-      1,
+      8,
       readingList.length
     );
 

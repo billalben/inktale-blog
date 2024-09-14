@@ -29,7 +29,7 @@ const renderProfile = async (req, res) => {
     const pagination = getPagination(
       `/profile/${username}/`,
       req.params,
-      1,
+      8,
       profile.blogs.length
     );
 
