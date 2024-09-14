@@ -7,6 +7,9 @@ require("dotenv").config();
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
+const compression = require("compression");
+const minify = require("express-minify");
+
 const { connectDB, disconnectDB } = require("./src/config/mongoose_config");
 
 const register = require("./src/routes/register_route");
@@ -26,6 +29,12 @@ const userAuth = require("./src/middlewares/user_auth_middleware");
 
 // Initialize express
 const app = express();
+
+// Compress response body
+app.use(compression());
+app.use(minify());
+
+app.use(express.static(path.join(__dirname, "public")));
 
 // Set the view engine to ejs and the views directory
 app.set("view engine", "ejs");
@@ -56,8 +65,6 @@ app.use(
     },
   })
 );
-
-app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/register", register);
 app.use("/login", login);
