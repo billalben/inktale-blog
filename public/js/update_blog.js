@@ -2,7 +2,6 @@
 
 import Snackbar from "./utils/snackbar.js";
 import imagePreview from "./utils/imagePreview.js";
-import imageAsDataURL from "./utils/imageAsDataUrl.js";
 import config from "./utils/config.js";
 
 // Selectors for image field, button image preview, and clear preview
@@ -70,24 +69,13 @@ const handleBlogUpdate = async (event) => {
     formData.delete("banner");
   }
 
-  // Handle case when user update the blog banner
-  if (formData.get("banner")) {
-    formData.set("banner", await imageAsDataURL(formData.get("banner")));
-  }
-
-  // Create a request body from formData
-  const body = Object.fromEntries(formData.entries());
-
   // Show progress bar
   $progressBar.classList.add("loading");
 
   // Sending form data to the server to update a blog
   const response = await fetch(window.location.href, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
+    body: formData,
   });
 
   // Handle case where response is successful
@@ -101,8 +89,9 @@ const handleBlogUpdate = async (event) => {
   }
 
   // Handle case where response is unsuccessful
-  if ((response.status = 400)) {
-    $publishBtn.removeAttribute("disabled");
+  if ((response.status === 400)) {
+    // Enable published button and show error message
+    $submitBtn.removeAttribute("disabled");
     $progressBar.classList.add("loading-end");
 
     const { message } = await response.json();

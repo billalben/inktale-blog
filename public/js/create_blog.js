@@ -3,7 +3,6 @@
 import imagePreview from "./utils/imagePreview.js";
 import Snackbar from "./utils/snackbar.js";
 import config from "./utils/config.js";
-import imageAsDataURL from "./utils/imageAsDataUrl.js";
 
 // Selectors for image field, button image preview, and clear preview
 const $imageField = document.querySelector("[data-image-field]");
@@ -65,22 +64,13 @@ const handlePublishBlog = async function (event) {
     return;
   }
 
-  // Overwrite banner value (which is type of 'File') to base64
-  formData.set("banner", await imageAsDataURL(formData.get("banner")));
-
-  // Create a request body from formData
-  const body = Object.fromEntries(formData.entries());
-
   // Show progress bar
   $progressBar.classList.add("loading");
 
   // Sending form data to the server to create a new blog
   const response = await fetch(`${window.location.origin}/create-blog`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
+    body: formData,
   });
 
   // Handle case where response is successful
@@ -93,12 +83,13 @@ const handlePublishBlog = async function (event) {
   }
 
   // Handle case where response is unsuccessful
-  if ((response.status = 400)) {
+  if (response.status === 400) {
     // Enable published button and show error message
     $publishBtn.removeAttribute("disabled");
     $progressBar.classList.add("loading-end");
 
     const { message } = await response.json();
+
     Snackbar({ type: "error", message });
   }
 };

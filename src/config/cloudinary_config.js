@@ -11,8 +11,8 @@ cloudinary.config({
 });
 
 /**
- * Uploads an image base64 to Cloudinary.
- * @param {string} image - The image base64 to upload.
+ * Uploads an image to Cloudinary.
+ * @param {string} image - req.file.path from multer.
  * @param {string} public_id - The identifier that's use for accessing and delivering the uploaded asset.
  * @returns {Promise<string>} - A promise that resolves with the URL of the uploaded image on Cloudinary.
  * @throws {Error} - An error from the Cloudinary API.

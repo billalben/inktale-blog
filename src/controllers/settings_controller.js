@@ -8,6 +8,8 @@ const mongoose = require("mongoose");
 
 const uploadToCloudinary = require("../config/cloudinary_config");
 
+const imageConfig = require("../config/image_config");
+
 /**
  * Retrieves settings for the current user and renders the settings page.
  * @async
@@ -52,7 +54,8 @@ const updateBasicInfo = async (req, res) => {
     }).select("profilePhoto name username email bio");
 
     // Destructure properties from request body
-    const { name, username, email, bio, profilePhoto } = req.body;
+    const { name, username, email, bio } = req.body;
+    const profilePhotoFile = req.file;
 
     // Handle case where new email is already associated with another account
     if (email) {
@@ -80,10 +83,20 @@ const updateBasicInfo = async (req, res) => {
       req.session.user.username = username;
     }
 
+    // Handle case where profile photo is larger than 1MB
+    if (profilePhotoFile?.size > imageConfig.profilePhoto.maxByteSize) {
+      return res.status(400).json({
+        message: "Profile photo size must be less than 1MB",
+      });
+    }
+
     // If profile photo is provided, upload it to cloudinary and update user's profile photo
     if (profilePhoto) {
       const public_id = currentUser.username;
-      const imageURL = await uploadToCloudinary(profilePhoto, public_id);
+      const imageURL = await uploadToCloudinary(
+        profilePhotoFile.path,
+        public_id
+      );
 
       currentUser.profilePhoto = {
         url: imageURL,

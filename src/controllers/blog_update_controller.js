@@ -3,6 +3,8 @@
 const Blog = require("../models/blog_model");
 const uploadToCloudinary = require("../config/cloudinary_config");
 
+const config = require("../config/image_config");
+
 /**
  * Retrieves a blog from the database and renders a page for updating it.
  * @param {object} req - The request object.
@@ -54,19 +56,27 @@ const updateBlog = async (req, res) => {
     // Retrieve blogId from the request parameters
     const { blogId } = req.params;
 
-    // Retrieve blog title, content and banner from the request body
-    const { title, content, banner } = req.body;
+    // Retrieve blog title, content from the request body
+    const { title, content } = req.body;
+
+    const bannerFile = req.file;
 
     // Find the blog user want to update by it's id
     const updatedBlog = await Blog.findById(blogId).select(
       "banner title content"
     );
 
+    if (bannerFile?.size > config.blogBanner.maxByteSize) {
+      return res.status(400).json({
+        message: "Banner image should be less than 3 MB.",
+      });
+    }
+
     // Handle case where banner is exist in the request body
-    if (banner) {
+    if (bannerFile) {
       // Upload the new banner to Cloudinary
       const bannerURL = await uploadToCloudinary(
-        banner,
+        bannerFile.path,
         updatedBlog.banner.public_id
       );
 

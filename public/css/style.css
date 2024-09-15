@@ -335,7 +335,7 @@ button {
   cursor: pointer;
 }
 
-::--webkit-scrollbar {
+/* ::--webkit-scrollbar {
   width: 12px;
   height: 8px;
 }
@@ -345,6 +345,20 @@ button {
 }
 
 ::--webkit-scrollbar-thumb {
+  background-color: var(--outline);
+  border-radius: var(--radius-full);
+} */
+
+:state(webkit-scrollbar) {
+  width: 12px;
+  height: 8px;
+}
+
+:state(webkit-scrollbar-track) {
+  background-color: var(--surface-container);
+}
+
+:state(webkit-scrollbar-thumb) {
   background-color: var(--outline);
   border-radius: var(--radius-full);
 }
@@ -1292,7 +1306,8 @@ body:has(.dialog-root.active) {
 }
 
 .create-blog-page:has(.image-preview.show)
-  :where(.image-field, .text, .image-field-wrapper .btn) {
+  .image-field-wrapper
+  :where(.btn, .text) {
   display: none;
 }
 

@@ -40,11 +40,12 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views"));
 
+// Parse JSON bodies (as sent by API clients)
+app.use(express.json({ limit: "6mb" }));
+
 // Parse url-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded({ extended: true }));
 
-// Parse JSON bodies (as sent by API clients)
-app.use(express.json({ limit: "6mb" }));
 
 // Instance for session storage
 const store = new MongoStore({

@@ -2,7 +2,6 @@
 
 import Snackbar from "./utils/snackbar.js";
 import imagePreview from "./utils/imagePreview.js";
-import imageAsDataURL from "./utils/imageAsDataUrl.js";
 import config from "./utils/config.js";
 
 // Selectors for image field, image preview, and image preview clear button
@@ -66,12 +65,6 @@ const updateBasicInfo = async (event) => {
     formData.delete("profilePhoto");
   }
 
-  // Handle case when profilePhoto field exists
-  if (formData.get("profilePhoto")) {
-    // Overwrite profilePhoto value (which is type of 'file') to base64
-    formData.set("profilePhoto", await imageAsDataURL($imageField.files[0]));
-  }
-
   // Handle case where user did not change username
   if (formData.get("username") === oldFormData.get("username")) {
     formData.delete("username");
@@ -82,17 +75,13 @@ const updateBasicInfo = async (event) => {
     formData.delete("email");
   }
 
-  // Create request body from formData object
-  const body = Object.fromEntries(formData.entries());
-
   // Show progress bar
   $progressBar.classList.add("loading");
 
   // Send a PUT request to update basic information
   const response = await fetch(`${window.location.href}/basic-info`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
+    body: formData,
   });
 
   // Handle case where response is successful
