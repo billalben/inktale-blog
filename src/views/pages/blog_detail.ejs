@@ -65,9 +65,7 @@
                   <img src="<%= compressedProfilePhotoURL %>" width="40" height="40" alt="<%= authorName %>" class="img-cover">
                 </figure>
               <% } else {%>
-                <p class="avatar title-medium">
-                  <%= authorName.at() %>
-                </p>
+                <p class="avatar title-medium"> <%= authorName.at() %> </p>
               <% } %>
 
               <div class="leading-text">
@@ -91,9 +89,7 @@
             </div>
 
             <div class="blog-content">
-              <h1 class="title headline-large text-on-surface">
-                <%= title %>
-              </h1>
+              <h1 class="title headline-large text-on-surface"><%= title %></h1>
               <div class="content-markdown text-on-surface-variant">
                 <%- locals.markdown.render(content) %>
               </div>
@@ -101,10 +97,7 @@
 
             <div class="blog-actions">
               <div class="action-item">
-                <button 
-                  class="icon-btn filled-tonal <%= userReactedBlogs?.includes(currentBlogId) ? 'active' : '' %>" 
-                  data-reaction-btn
-                >
+                <button class="icon-btn filled-tonal <%= userReactedBlogs?.includes(currentBlogId) ? 'active' : '' %>" data-reaction-btn>
                   <span class="material-symbols-rounded icon" aria-hidden="true">
                     favorite
                   </span>
@@ -112,16 +105,12 @@
                 </button>
   
                 <p class="lable-large text-on-surface-variant">
-                  <span data-reaction-number><%= reaction %></span>
-                  Reactions
+                  <span data-reaction-number> <%= reaction %> </span> Reactions
                 </p>
               </div>
 
               <div class="action-item">
-                <button 
-                  class="icon-btn filled-tonal <%= userReadingListedBlogs?.includes(currentBlogId) ? 'active' : '' %>" 
-                  data-reading-list-btn
-                >
+                <button class="icon-btn filled-tonal <%= userReadingListedBlogs?.includes(currentBlogId) ? 'active' : '' %>" data-reading-list-btn>
                   <span class="material-symbols-rounded icon" aria-hidden="true">
                     bookmark
                   </span>
@@ -129,8 +118,7 @@
                 </button>
   
                 <p class="lable-large text-on-surface-variant">
-                  <span data-reading-list-number><%= totalBookmark %></span>
-                  Bookmarks
+                  <span data-reading-list-number> <%= totalBookmark %> </span> Bookmarks
                 </p>
               </div>
             </div>
@@ -139,9 +127,7 @@
           <!-- #MORE BLOGS -->
           <% if (locals.ownerBlogs.length) { %>
             <section class="more-blog">
-              <h2 class="title title-large text-o-surface">
-                Read Next
-              </h2>
+              <h2 class="title title-large text-o-surface">Read Next</h2>
 
               <div class="blog-list">
                 <% locals.ownerBlogs.forEach(blog => { %>

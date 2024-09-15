@@ -1,5 +1,12 @@
-<% const { blogs, blogPublished, totalReactions, totalVisits, } =
-locals.loggedUser; %>
+<% 
+  const {
+    blogs,
+    blogPublished,
+    totalReactions,
+    totalVisits,
+  } = locals.loggedUser;
+%>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,9 +29,7 @@ locals.loggedUser; %>
           <section class="analytics-list">
             <div class="analytics-card">
               <div class="analytics-icon-box">
-                <span class="material-symbols-rounded" aria-hidden="true">
-                  visibility
-                </span>
+                <span class="material-symbols-rounded" aria-hidden="true">visibility</span>
               </div>
               <div>
                 <h3 class="display-medium text-on-surface card-title">
@@ -36,33 +41,25 @@ locals.loggedUser; %>
 
             <div class="analytics-card">
               <div class="analytics-icon-box">
-                <span class="material-symbols-rounded" aria-hidden="true">
-                  favorite
-                </span>
+                <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
               </div>
               <div>
                 <h3 class="display-medium text-on-surface card-title">
                   <%= totalReactions.toLocaleString("en-US") %>
                 </h3>
-                <p class="title-medium text-on-surface-variant">
-                  Total Reactions
-                </p>
+                <p class="title-medium text-on-surface-variant">Total Reactions</p>
               </div>
             </div>
 
             <div class="analytics-card">
               <div class="analytics-icon-box">
-                <span class="material-symbols-rounded" aria-hidden="true">
-                  article
-                </span>
+                <span class="material-symbols-rounded" aria-hidden="true">article</span>
               </div>
               <div>
                 <h3 class="display-medium text-on-surface card-title">
                   <%= blogPublished.toLocaleString("en-US") %>
                 </h3>
-                <p class="title-medium text-on-surface-variant">
-                  Article Published
-                </p>
+                <p class="title-medium text-on-surface-variant">Article Published</p>
               </div>
             </div>
           </section>
@@ -71,14 +68,16 @@ locals.loggedUser; %>
           <section>
             <h2 class="title-large title text-on-surface">Posts</h2>
             <div class="post-lists">
-              <% if (blogs.length) { %> <% blogs.forEach(blog => { %> <%-
-              include('../partials/list_item',{ blog }) %> <% }) %> <% } else {
-              %>
-              <div class="list-item">
-                <p class="text-on-surface-variant body-large">
-                  You haven't written any blog yet.
-                </p>
-              </div>
+              <% if (blogs.length) { %>
+                <% blogs.forEach(blog => { %>
+                <%-include('../partials/list_item',{ blog }) %>
+              <% }) %>
+              <% } else { %>
+                <div class="list-item">
+                  <p class="text-on-surface-variant body-large">
+                    You haven't written any blog yet.
+                  </p>
+                </div>
               <% } %>
             </div>
           </section>
@@ -87,7 +86,7 @@ locals.loggedUser; %>
     </main>
 
     <!-- SNACKBAR -->
-    <div class="snackbar-wrapper" data-snackbar-wrapper=""></div>
+    <div class="snackbar-wrapper" data-snackbar-wrapper></div>
 
     <!-- #FOOTER -->
     <%- include('../layouts/footer') %>

@@ -44,18 +44,14 @@
 
               <div class="profile-meta-list">
                 <div class="profile-meta-item text-on-surface-variant">
-                  <span class="material-symbols-rounded" aria-hidden="true">
-                    calendar_month
-                  </span>
+                  <span class="material-symbols-rounded" aria-hidden="true">calendar_month</span>
                   <p class="body-large text-on-surface-variant">
                     Member since <%= new Date(createdAt).toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric'}) %>
                   </p>
                 </div>
 
                 <div class="profile-meta-item text-on-surface-variant">
-                  <span class="material-symbols-rounded" aria-hidden="true">
-                    article
-                  </span>
+                  <span class="material-symbols-rounded" aria-hidden="true">article</span>
                   <p class="body-large text-on-surface-variant">
                     <%= blogPublished %> blogs published
                   </p>
@@ -64,9 +60,7 @@
 
               <% if (profileUsername === locals.sessionUser?.username) { %>
                 <a href="/settings" class="btn filled-tonal">
-                  <span class="material-symbols-rounded" aria-hidden="true">
-                    edit_square
-                  </span>
+                  <span class="material-symbols-rounded" aria-hidden="true">edit_square</span>
                   <p class="label-large">Edit profile</p>
                   <div class="state-layer"></div>
                 </a>
