@@ -23,20 +23,8 @@
   </button>
   <% } %>
   <a href="/" class="logo">
-    <img
-      src="/images/logo-light.svg"
-      width="98"
-      height="24"
-      alt="Inktale"
-      class="light"
-    />
-    <img
-      src="/images/logo-dark.svg"
-      width="98"
-      height="24"
-      alt="Inktale"
-      class="dark"
-    />
+    <img src="/images/logo-light.svg" width="98" height="24" alt="Inktale" class="light" loading="lazy" />
+    <img src="/images/logo-dark.svg" width="98" height="24" alt="Inktale" class="dark" loading="lazy" />
   </a>
 
   <div class="trailing-action-wrapper">
@@ -54,7 +42,7 @@
       <button class="icon-btn" data-menu-toggler>
         <div class="avatar">
           <% if (compressedProfilePhotoURL) { %>
-            <img src="<%= compressedProfilePhotoURL %>" width="40" height="40" alt="<%= name %>" class="img-cover">  
+            <img src="<%= compressedProfilePhotoURL %>" width="40" height="40" alt="<%= name %>" class="img-cover" loading="lazy" />
           <% } else { %>
             <p class="title-medium"><%= name.at() %></p>
           <% } %>
@@ -65,7 +53,7 @@
         <div class="list-item small">
           <div class="avatar">
             <% if (compressedProfilePhotoURL) { %>
-              <img src="<%= compressedProfilePhotoURL %>" width="40" height="40" alt="<%= name %>" class="img-cover">  
+              <img src="<%= compressedProfilePhotoURL %>" width="40" height="40" alt="<%= name %>" class="img-cover" loading="lazy" />
             <% } else { %>
               <p class="title-medium"><%= name.at() %></p>
             <% } %>

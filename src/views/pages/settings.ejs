@@ -51,7 +51,7 @@
 
                   <% if (compressedProfilePhotoURL) { %>
                     <div class="image-preview show" data-image-preview>
-                      <img src="<%= compressedProfilePhotoURL %>" width="200" height="200" alt="<%= name %>" class="img-cover"> 
+                      <img src="<%= compressedProfilePhotoURL %>" width="200" height="200" alt="<%= name %>" class="img-cover" loading="lazy" />
                     </div>
                   <% } else { %>
                     <div class="image-preview" data-image-preview></div>

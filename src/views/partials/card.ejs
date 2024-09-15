@@ -29,7 +29,7 @@
 <div class="card">
   <% if (compressedBannerURL) { %>
     <figure class="card-banner img-holder">
-    <img src="<%= compressedBannerURL %>" width="360" height="155" alt="<%= title %>" class="img-cover">
+    <img src="<%= compressedBannerURL %>" width="360" height="155" alt="<%= title %>" class="img-cover" loading="lazy" />
     </figure>
   <% } %>
 
@@ -37,7 +37,7 @@
     <div class="card-meta">
       <div class="avatar">
         <% if (compressedProfilePhotoURL) { %>
-          <img src="<%= compressedProfilePhotoURL %>" width="32" height="32" alt="<%= name %>" class="img-cover">  
+          <img src="<%= compressedProfilePhotoURL %>" width="32" height="32" alt="<%= name %>" class="img-cover" loading="lazy" />
         <% } else { %>
           <p class="title-medium"><%= name.at() %></p>
         <% } %>

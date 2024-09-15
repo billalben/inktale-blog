@@ -56,13 +56,13 @@
         <div class="container">
           <article class="blog-detail">
             <figure class="blog-banner img-holder">
-              <img src="<%= compressedBannerURL %>" width="960" height="420" alt="<%= title %>" class="img-cover">
+              <img src="<%= compressedBannerURL %>" width="960" height="420" alt="<%= title %>" class="img-cover" loading="lazy" />
             </figure>
 
             <div class="blog-author">
               <% if (compressedProfilePhotoURL) { %>
                 <figure class="avatar">
-                  <img src="<%= compressedProfilePhotoURL %>" width="40" height="40" alt="<%= authorName %>" class="img-cover">
+                  <img src="<%= compressedProfilePhotoURL %>" width="40" height="40" alt="<%= authorName %>" class="img-cover" loading="lazy" />
                 </figure>
               <% } else {%>
                 <p class="avatar title-medium"> <%= authorName.at() %> </p>
