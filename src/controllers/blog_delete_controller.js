@@ -23,7 +23,7 @@ const deleteBlog = async (req, res) => {
 
     // Find the current user by username
     const currentUser = await User.findOne({ username }).select(
-      "blogPublished totalVisits totalReactions"
+      "blogPublished totalVisits totalReactions blogs"
     );
 
     // Update user information from the database
