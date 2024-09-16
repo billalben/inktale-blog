@@ -23,7 +23,7 @@ const renderCreateBlog = (req, res) => {
   });
 };
 
-const postCreateBlog = async (req, res) => {
+const postCreateBlog = async (req, res, next) => {
   try {
     const { title, content } = req.body;
 
@@ -68,7 +68,8 @@ const postCreateBlog = async (req, res) => {
     // Redirect to the newly created blog post page
     res.redirect(`/blogs/${newBlog._id}`);
   } catch (error) {
-    return res.status(400).json({ success: false, message: error?.message });
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

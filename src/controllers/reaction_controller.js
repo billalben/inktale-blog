@@ -11,7 +11,7 @@ const Blog = require("../models/blog_model");
  * @throws {Error} - Throws an error if there is any issue during the process.
  */
 
-const updateReaction = async (req, res) => {
+const updateReaction = async (req, res, next) => {
   try {
     // Handle case where user is not authenticated
     if (!req.session.user) return res.sendStatus(401);
@@ -50,8 +50,8 @@ const updateReaction = async (req, res) => {
 
     res.sendStatus(200);
   } catch (error) {
-    console.error("Error updating reaction", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 
@@ -62,7 +62,7 @@ const updateReaction = async (req, res) => {
  * @throws {Error} - Throws an error if there is any issue during the process.
  */
 
-const deleteReaction = async (req, res) => {
+const deleteReaction = async (req, res, next) => {
   try {
     // Handle case where user is not authenticated
     if (!req.session.user) return res.sendStatus(401);
@@ -92,7 +92,10 @@ const deleteReaction = async (req, res) => {
     await reactedBlog.save();
 
     // Update current user's reactedBlogs list and save
-    currentUser.reactedBlogs.splice(currentUser.reactedBlogs.indexOf(blogId), 1);
+    currentUser.reactedBlogs.splice(
+      currentUser.reactedBlogs.indexOf(blogId),
+      1
+    );
     await currentUser.save();
 
     // Update blog author's total reaction list and save
@@ -101,8 +104,8 @@ const deleteReaction = async (req, res) => {
 
     res.sendStatus(200);
   } catch (error) {
-    console.error("Error Deleting reaction", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

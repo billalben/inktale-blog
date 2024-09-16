@@ -11,7 +11,7 @@ const getPagination = require("../utils/get_pagination-util");
  * @param {object} res - The response object.
  * @throws {Error} - Throws error if there is an error.
  */
-const renderProfile = async (req, res) => {
+const renderProfile = async (req, res, next) => {
   try {
     // Extract the username from the request parameters
     const { username } = req.params;
@@ -52,8 +52,8 @@ const renderProfile = async (req, res) => {
       pagination,
     });
   } catch (error) {
-    console.error("Error Rendering profile", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

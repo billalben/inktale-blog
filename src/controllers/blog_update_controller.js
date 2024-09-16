@@ -1,7 +1,10 @@
 "use strict";
 
 const Blog = require("../models/blog_model");
-const { uploadToCloudinary, deleteFromCloudinary } = require("../config/cloudinary_config");
+const {
+  uploadToCloudinary,
+  deleteFromCloudinary,
+} = require("../config/cloudinary_config");
 
 const config = require("../config/image_config");
 
@@ -11,7 +14,7 @@ const config = require("../config/image_config");
  * @param {object} res - The response object.
  * @throws {Error} - Throws an error if the blog is not found.
  */
-const renderBlogEdit = async (req, res) => {
+const renderBlogEdit = async (req, res, next) => {
   try {
     // Get blogId from the request parameters
     const { blogId } = req.params;
@@ -40,8 +43,8 @@ const renderBlogEdit = async (req, res) => {
       currentBlog,
     });
   } catch (error) {
-    console.error("Error rendering blog edit page: ", error?.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 
@@ -51,7 +54,7 @@ const renderBlogEdit = async (req, res) => {
  * @param {object} res - The response object.
  * @throws {Error} - Throws an error if the blog is not found.
  */
-const updateBlog = async (req, res) => {
+const updateBlog = async (req, res, next) => {
   try {
     // Retrieve blogId from the request parameters
     const { blogId } = req.params;
@@ -96,8 +99,8 @@ const updateBlog = async (req, res) => {
     // Send a success response
     res.sendStatus(200);
   } catch (error) {
-    console.error("Error updating blog: ", error?.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

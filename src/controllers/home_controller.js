@@ -10,7 +10,7 @@ const getPagination = require("../utils/get_pagination-util");
  * @throws {Error} - An error if the blog data cannot be retrieved.
  */
 
-const renderHome = async (req, res) => {
+const renderHome = async (req, res, next) => {
   try {
     // Retrieve total amount of created blogs in the database
     const totalBlogs = await Blog.countDocuments();
@@ -37,8 +37,8 @@ const renderHome = async (req, res) => {
       pagination,
     });
   } catch (error) {
-    console.error("Error rendering home page", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

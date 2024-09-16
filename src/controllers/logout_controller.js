@@ -6,15 +6,14 @@
  * @param {Object} res - Express response object
  */
 
-const logout = async (req, res) => {
+const logout = async (req, res, next) => {
   try {
     // Delete user session
     req.session.destroy();
-
     res.redirect("/");
   } catch (error) {
-    console.error("Error in logout: ", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

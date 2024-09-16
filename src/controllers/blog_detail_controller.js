@@ -13,7 +13,7 @@ const markdown = require("../config/markdown_it_config");
  * @throws {Error} - Throws error if there is an issue with the database
  */
 
-const renderBlogDetail = async (req, res) => {
+const renderBlogDetail = async (req, res, next) => {
   try {
     const { blogId } = req.params;
 
@@ -63,8 +63,8 @@ const renderBlogDetail = async (req, res) => {
       markdown,
     });
   } catch (error) {
-    console.error("Error rendering blog detail page: ", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

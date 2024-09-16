@@ -8,7 +8,7 @@ const Blog = require("../models/blog_model");
  * @param {object} res - The response object.
  * @throws {Error} - Throws an error if there is an issue with the request.
  */
-const updateVisit = async (req, res) => {
+const updateVisit = async (req, res, next) => {
   try {
     // Destructure blogId from the request parameters
     const { blogId } = req.params;
@@ -32,8 +32,8 @@ const updateVisit = async (req, res) => {
     // Send a success response
     res.sendStatus(200);
   } catch (error) {
-    console.error("Error updating totalVisit", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

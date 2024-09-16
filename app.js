@@ -7,6 +7,9 @@ require("dotenv").config();
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
+const rateLimiter = require("./src/middlewares/rate_limiter_middleware");
+const cors = require("cors");
+
 const compression = require("compression");
 const minify = require("express-minify");
 
@@ -26,26 +29,34 @@ const deleteBlog = require("./src/routes/delete_blog_route");
 const settings = require("./src/routes/settings_route");
 
 const userAuth = require("./src/middlewares/user_auth_middleware");
+const errorHandling = require("./src/middlewares/error_middleware");
 
 // Initialize express
 const app = express();
 
-// Compress response body
+// Security middlewares
+if (process.env.NODE_ENV === "production") {
+  app.use(
+    cors({
+      origin: process.env.CORS_ORIGIN,
+      credentials: true,
+    })
+  );
+}
+app.use(rateLimiter);
+
+// Compression and static files
 app.use(compression());
 app.use(minify());
-
 app.use(express.static(path.join(__dirname, "public")));
 
 // Set the view engine to ejs and the views directory
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views"));
 
-// Parse JSON bodies (as sent by API clients)
+// Body parsing and sessions
 app.use(express.json({ limit: "6mb" }));
-
-// Parse url-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded({ extended: true }));
-
 
 // Instance for session storage
 const store = new MongoStore({
@@ -76,7 +87,10 @@ app.use("/blogs", blogDetail);
 
 app.use("/profile", profile);
 
-// Middleware to check if the user is authenticated
+/**
+ * Middleware to check if the user is authenticated
+ * before allowing access to certain routes
+ */
 app.use(userAuth);
 
 app.use("/create-blog", createBlog);
@@ -89,14 +103,16 @@ app.use("/dashboard", dashboard);
 
 app.use("/settings", settings);
 
-/*
+// Error-handling middleware (should be the last middleware)
+app.use(errorHandling);
+
+/**
  * Start the server
  */
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, async () => {
   await connectDB(process.env.MONGO_CONNECTION_URI);
-
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 

@@ -21,7 +21,7 @@ const imageConfig = require("../config/image_config");
  * @param {object} res - Express response object.
  * @throws {Error} - Throws error if there is an issue rendering the settings page.
  */
-const renderSettings = async (req, res) => {
+const renderSettings = async (req, res, next) => {
   try {
     // Retrieve logged client username
     const { username } = req.session.user;
@@ -35,8 +35,8 @@ const renderSettings = async (req, res) => {
       currentUser,
     });
   } catch (error) {
-    console.error("Error rendering settings page: ", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 
@@ -46,7 +46,7 @@ const renderSettings = async (req, res) => {
  * @param {object} res - Express response object.
  * @throws {Error} - Throws error if there is an issue updating basic information.
  */
-const updateBasicInfo = async (req, res) => {
+const updateBasicInfo = async (req, res, next) => {
   try {
     // Retrieve logged client username
     const { username: sessionUsername } = req.session.user;
@@ -125,8 +125,8 @@ const updateBasicInfo = async (req, res) => {
     // Send a response indicating success
     res.sendStatus(200);
   } catch (error) {
-    console.error("Error updating basic information: ", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 
@@ -136,7 +136,7 @@ const updateBasicInfo = async (req, res) => {
  * @param {object} res - Express response object.
  * @throws {Error} - Throws error if there is an issue updating password.
  */
-const updatePassword = async (req, res) => {
+const updatePassword = async (req, res, next) => {
   try {
     // Retrieve logged client username from session
     const { username: sessionUsername } = req.session.user;
@@ -169,8 +169,8 @@ const updatePassword = async (req, res) => {
     // Send a response indicating success
     res.sendStatus(200);
   } catch (error) {
-    console.error("Error updating password: ", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 
@@ -180,7 +180,7 @@ const updatePassword = async (req, res) => {
  * @param {object} res - The response object.
  * @throws {Error} - Throws error if there is an issue Deleting user account.
  */
-const deleteAccount = async (req, res) => {
+const deleteAccount = async (req, res, next) => {
   try {
     // Retrieve logged client username from session
     const { username } = req.session.user;
@@ -205,8 +205,8 @@ const deleteAccount = async (req, res) => {
 
     res.sendStatus(200);
   } catch (error) {
-    console.error("Error deleting account: ", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

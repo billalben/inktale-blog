@@ -8,7 +8,7 @@ const User = require("../models/user_model");
  * @param {object} req - The request object.
  * @param {object} res - The response object.
  */
-const deleteBlog = async (req, res) => {
+const deleteBlog = async (req, res, next) => {
   try {
     // Retrieve blogId from the request parameters
     const { blogId } = req.params;
@@ -39,8 +39,8 @@ const deleteBlog = async (req, res) => {
     // Send a success response
     res.sendStatus(200);
   } catch (error) {
-    console.error("Error deleting blog:", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

@@ -1,7 +1,7 @@
 "use strict";
 
 const router = require("express").Router();
-const upload = require("../middlewares/multer");
+const upload = require("../middlewares/multer_middleware");
 
 /**
  * Custom modules

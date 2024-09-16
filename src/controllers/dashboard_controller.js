@@ -8,7 +8,7 @@ const User = require("../models/user_model");
  * @param {object} res - Express response object.
  * @throws {Error} - Throws error if there is an issue rendering the dashboard.
  */
-const renderDashboard = async (req, res) => {
+const renderDashboard = async (req, res, next) => {
   try {
     // Get logged user username
     const { username } = req.session.user;
@@ -28,8 +28,8 @@ const renderDashboard = async (req, res) => {
       loggedUser,
     });
   } catch (error) {
-    console.error("Error rendering dashboard:", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

@@ -13,7 +13,7 @@ const getPagination = require("../utils/get_pagination-util");
  * @throws {Error} - Throws an error if there is any issue during the process.
  */
 
-const addToReadingList = async (req, res) => {
+const addToReadingList = async (req, res, next) => {
   try {
     // Check if the user is authenticated
     if (!req.session.user) return res.sendStatus(401);
@@ -41,8 +41,8 @@ const addToReadingList = async (req, res) => {
 
     res.sendStatus(200);
   } catch (error) {
-    console.error("Error adding reading", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 
@@ -53,7 +53,7 @@ const addToReadingList = async (req, res) => {
  * @throws {Error} - Throws an error if there is any issue during the process.
  */
 
-const RemoveFromReadingList = async (req, res) => {
+const RemoveFromReadingList = async (req, res, next) => {
   try {
     // Check if the user is authenticated
     if (!req.session.user) return res.sendStatus(401);
@@ -81,12 +81,12 @@ const RemoveFromReadingList = async (req, res) => {
 
     res.sendStatus(200);
   } catch (error) {
-    console.error("Error removing reading list", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 
-const renderReadingList = async (req, res) => {
+const renderReadingList = async (req, res, next) => {
   try {
     // Retrieve logged client username
     const { username } = req.session.user;
@@ -122,8 +122,8 @@ const renderReadingList = async (req, res) => {
       pagination,
     });
   } catch (error) {
-    console.error("Error rendering reading list", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

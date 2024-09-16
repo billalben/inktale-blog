@@ -9,7 +9,7 @@ const {
   deleteAccount,
 } = require("../controllers/settings_controller");
 
-const upload = require("../middlewares/multer");
+const upload = require("../middlewares/multer_middleware");
 
 // GET route: render the settings page
 router.get("/", renderSettings);

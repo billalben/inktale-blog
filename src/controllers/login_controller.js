@@ -26,7 +26,7 @@ const renderLogin = (req, res) => {
  * @returns {Promise<void>} - A promise representing the asynchronous operation.
  */
 
-const postLogin = async (req, res) => {
+const postLogin = async (req, res, next) => {
   try {
     // Extract email and password from the request body
     const { email, password } = req.body;
@@ -60,8 +60,8 @@ const postLogin = async (req, res) => {
 
     return res.redirect("/");
   } catch (error) {
-    console.log("postLogin", error.message);
-    throw error;
+    // Pass the error to Express error handler middleware
+    next(error);
   }
 };
 

@@ -71,10 +71,6 @@ const postRegister = async (req, res) => {
         .status(400)
         .send({ message: `Failed To Register User.<br>${error.message}` });
     }
-
-    // Log and throw the error if any occurs during register process
-    console.log("postRegister", error.message);
-    throw error;
   }
 };
 
