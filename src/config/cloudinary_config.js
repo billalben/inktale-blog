@@ -30,4 +30,16 @@ const uploadToCloudinary = async (image, public_id) => {
   }
 };
 
-module.exports = uploadToCloudinary;
+/**
+ * Deletes an image from Cloudinary.
+ * @param {string} public_id - The identifier that's use for accessing and delivering the uploaded asset.
+ */
+const deleteFromCloudinary = async (public_id = "") => {
+  try {
+    await cloudinary.uploader.destroy(public_id);
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { uploadToCloudinary, deleteFromCloudinary };

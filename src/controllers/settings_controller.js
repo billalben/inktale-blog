@@ -6,7 +6,10 @@ const Blog = require("../models/blog_model");
 const bycrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
-const uploadToCloudinary = require("../config/cloudinary_config");
+const {
+  uploadToCloudinary,
+  deleteFromCloudinary,
+} = require("../config/cloudinary_config");
 
 const imageConfig = require("../config/image_config");
 
@@ -90,8 +93,14 @@ const updateBasicInfo = async (req, res) => {
       });
     }
 
-    // If profile photo is provided, upload it to cloudinary and update user's profile photo
-    if (profilePhoto) {
+    // If profile photo is provided, delete the current profile photo and upload it to cloudinary and update user's profile photo
+    if (profilePhotoFile) {
+      // Delete the current profile photo from cloudinary
+      if (currentUser?.profilePhoto?.public_id) {
+        await deleteFromCloudinary(currentUser.profilePhoto.public_id);
+      }
+
+      // Upload the new profile photo to cloudinary
       const public_id = currentUser.username;
       const imageURL = await uploadToCloudinary(
         profilePhotoFile.path,

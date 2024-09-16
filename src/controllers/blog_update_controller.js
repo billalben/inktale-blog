@@ -1,7 +1,7 @@
 "use strict";
 
 const Blog = require("../models/blog_model");
-const uploadToCloudinary = require("../config/cloudinary_config");
+const { uploadToCloudinary, deleteFromCloudinary } = require("../config/cloudinary_config");
 
 const config = require("../config/image_config");
 
@@ -74,6 +74,8 @@ const updateBlog = async (req, res) => {
 
     // Handle case where banner is exist in the request body
     if (bannerFile) {
+      // Delete the old banner from Cloudinary
+      await deleteFromCloudinary(updatedBlog.banner.public_id);
       // Upload the new banner to Cloudinary
       const bannerURL = await uploadToCloudinary(
         bannerFile.path,

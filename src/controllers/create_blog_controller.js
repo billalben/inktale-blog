@@ -2,7 +2,7 @@
 
 const crypto = require("crypto");
 
-const uploadToCloudinary = require("../config/cloudinary_config");
+const { uploadToCloudinary } = require("../config/cloudinary_config");
 
 const User = require("../models/user_model");
 const Blog = require("../models/blog_model");
