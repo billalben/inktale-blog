@@ -3,6 +3,8 @@
 const Blog = require("../models/blog_model");
 const User = require("../models/user_model");
 
+const { deleteFromCloudinary } = require("../config/cloudinary_config");
+
 /**
  *
  * @param {object} req - The request object.
@@ -18,8 +20,11 @@ const deleteBlog = async (req, res, next) => {
 
     // Find the blog to delete it
     const deletedBlog = await Blog.findOne({ _id: blogId }).select(
-      "reaction totalVisit"
+      "banner reaction totalVisit"
     );
+
+    // Delete the blog banner from Cloudinary
+    await deleteFromCloudinary(deletedBlog.banner.public_id);
 
     // Find the current user by username
     const currentUser = await User.findOne({ username }).select(

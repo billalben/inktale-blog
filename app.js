@@ -15,22 +15,6 @@ const minify = require("express-minify");
 
 const { connectDB, disconnectDB } = require("./src/config/mongoose_config");
 
-const register = require("./src/routes/register_route");
-const login = require("./src/routes/login_route");
-const home = require("./src/routes/home_route");
-const createBlog = require("./src/routes/create_blog_route");
-const logout = require("./src/routes/logout_route");
-const blogDetail = require("./src/routes/blog_detail_route");
-const readingList = require("./src/routes/reading_list_route");
-const blogUpdate = require("./src/routes/blog_update_route");
-const profile = require("./src/routes/profile_route");
-const dashboard = require("./src/routes/dashboard_route");
-const deleteBlog = require("./src/routes/delete_blog_route");
-const settings = require("./src/routes/settings_route");
-
-const userAuth = require("./src/middlewares/user_auth_middleware");
-const errorHandling = require("./src/middlewares/error_middleware");
-
 // Initialize express
 const app = express();
 
@@ -42,8 +26,9 @@ if (process.env.NODE_ENV === "production") {
       credentials: true,
     })
   );
+
+  app.use(rateLimiter);
 }
-app.use(rateLimiter);
 
 // Compression and static files
 app.use(compression());
@@ -78,33 +63,37 @@ app.use(
   })
 );
 
-app.use("/register", register);
-app.use("/login", login);
-app.use("/", home);
-app.use("/logout", logout);
+app.use("/register", require("./src/routes/register_route"));
+app.use("/login", require("./src/routes/login_route"));
+app.use("/", require("./src/routes/home_route"));
+app.use("/logout", require("./src/routes/logout_route"));
 
-app.use("/blogs", blogDetail);
+app.use("/blogs", require("./src/routes/blog_detail_route"));
 
-app.use("/profile", profile);
+app.use("/profile", require("./src/routes/profile_route"));
 
 /**
  * Middleware to check if the user is authenticated
  * before allowing access to certain routes
  */
-app.use(userAuth);
+app.use(require("./src/middlewares/user_auth_middleware"));
 
-app.use("/create-blog", createBlog);
+app.use("/create-blog", require("./src/routes/create_blog_route"));
 
-app.use("/reading-list", readingList);
+app.use("/reading-list", require("./src/routes/reading_list_route"));
 
-app.use("/blogs", blogUpdate, deleteBlog);
+app.use(
+  "/blogs",
+  require("./src/routes/blog_update_route"),
+  require("./src/routes/delete_blog_route")
+);
 
-app.use("/dashboard", dashboard);
+app.use("/dashboard", require("./src/routes/dashboard_route"));
 
-app.use("/settings", settings);
+app.use("/settings", require("./src/routes/settings_route"));
 
 // Error-handling middleware (should be the last middleware)
-app.use(errorHandling);
+app.use(require("./src/middlewares/error_middleware"));
 
 /**
  * Start the server
