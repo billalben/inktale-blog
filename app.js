@@ -19,16 +19,14 @@ const { connectDB, disconnectDB } = require("./src/config/mongoose_config");
 const app = express();
 
 // Security middlewares
-if (process.env.NODE_ENV === "production") {
-  app.use(
-    cors({
-      origin: process.env.CORS_ORIGIN,
-      credentials: true,
-    })
-  );
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  })
+);
 
-  app.use(rateLimiter);
-}
+app.use(rateLimiter);
 
 // Compression and static files
 app.use(compression());

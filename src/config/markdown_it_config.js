@@ -14,15 +14,17 @@ const markdown = new MarkdownIt({
   // or "" if the source string is not changed and should be escaped externally.
   // If result starts with ‹pre... internal wrapper is skipped.
   highlight: (str, lang) => {
-    if (!lang && !hljs.getLanguage(lang)) return "";
-
-    try {
-      return hljs.highlight(str, { language: lang, ignoreIllegals: true })
-        .value;
-    } catch (error) {
-      console.error("Error in highlighting code", error.message);
-      throw error;
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(str, { language: lang, ignoreIllegals: true })
+          .value;
+      } catch (error) {
+        console.error("Error in highlighting code", error.message);
+        throw error;
+      }
     }
+
+    return ""; // use external default escaping
   },
 });
 
