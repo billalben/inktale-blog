@@ -15,6 +15,10 @@ const minify = require("express-minify");
 
 const { connectDB, disconnectDB } = require("./src/config/mongoose_config");
 
+const job = require("./src/config/cron");
+
+job.start();
+
 // Initialize express
 const app = express();
 
