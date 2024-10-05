@@ -1,4 +1,6 @@
-const cron = require('node-cron');
+"use strict";
+
+const cron = require("node-cron");
 const https = require("https");
 
 const URL = "https://inktale-blog.onrender.com";
@@ -6,7 +8,6 @@ const URL = "https://inktale-blog.onrender.com";
 const job = new cron.schedule("*/10 * * * *", function () {
   https
     .get(URL, (res) => {
-      console.log("res", res);
       if (res.statusCode === 200) console.log("GET request sent successfully");
       else console.log("GET request failed", res.statusCode);
     })

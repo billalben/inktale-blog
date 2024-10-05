@@ -1,7 +1,6 @@
 "use strict";
 
 const mongoose = require("mongoose");
-const { db } = require("../models/user_model");
 
 /**
  * Client options object containing server api configuration.
