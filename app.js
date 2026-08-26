@@ -5,13 +5,12 @@ const path = require("path");
 require("dotenv").config();
 
 const session = require("express-session");
-const MongoStore = require("connect-mongo");
+const MongoStore = require("connect-mongo").default;
 
 const rateLimiter = require("./src/middlewares/rate_limiter_middleware");
 const cors = require("cors");
 
 const compression = require("compression");
-const minify = require("express-minify");
 
 const { connectDB, disconnectDB } = require("./src/config/mongoose_config");
 
@@ -30,7 +29,6 @@ app.use(rateLimiter);
 
 // Compression and static files
 app.use(compression());
-app.use(minify());
 app.use(express.static(path.join(__dirname, "public")));
 
 // Set the view engine to ejs and the views directory

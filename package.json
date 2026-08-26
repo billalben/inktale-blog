@@ -11,23 +11,22 @@
   "license": "Apache-2.0",
   "description": "",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcrypt": "^6.0.0",
     "cloudinary": "^2.5.0",
     "compression": "^1.7.4",
-    "connect-mongo": "^5.1.0",
+    "connect-mongo": "^6.0.0",
     "cors": "^2.8.5",
-    "ejs": "^3.1.10",
-    "express": "^4.19.2",
-    "express-minify": "^1.0.0",
-    "express-rate-limit": "^7.4.0",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.6.2",
     "express-session": "^1.18.0",
     "highlight.js": "^11.10.0",
-    "markdown-it": "^14.1.0",
-    "mongoose": "^8.5.3",
-    "multer": "^1.4.5-lts.1"
+    "markdown-it": "^15.0.0",
+    "mongoose": "^9.9.4",
+    "multer": "^2.2.0"
   },
   "devDependencies": {
-    "dotenv": "^16.4.5",
+    "dotenv": "^17.4.2",
     "nodemon": "^3.1.4"
   }
 }
