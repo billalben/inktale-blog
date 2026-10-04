@@ -1,34 +1,43 @@
 {
   "name": "inktale",
   "version": "1.0.0",
-  "main": "app.js",
+  "type": "module",
+  "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js"
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc && cp -r src/views dist/views",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
   "license": "Apache-2.0",
   "description": "",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcrypt": "^6.0.0",
     "cloudinary": "^2.5.0",
     "compression": "^1.7.4",
-    "connect-mongo": "^5.1.0",
+    "connect-mongo": "^6.0.0",
     "cors": "^2.8.5",
-    "ejs": "^3.1.10",
-    "express": "^4.19.2",
-    "express-minify": "^1.0.0",
-    "express-rate-limit": "^7.4.0",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.6.2",
     "express-session": "^1.18.0",
     "highlight.js": "^11.10.0",
-    "markdown-it": "^14.1.0",
-    "mongoose": "^8.5.3",
-    "multer": "^1.4.5-lts.1",
-    "node-cron": "^3.0.3"
+    "markdown-it": "^15.0.0",
+    "mongoose": "^9.9.4",
+    "multer": "^2.2.0"
   },
   "devDependencies": {
-    "dotenv": "^16.4.5",
-    "nodemon": "^3.1.4"
+    "@types/bcrypt": "^6.0.0",
+    "@types/compression": "^1.8.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/express-session": "^1.19.0",
+    "@types/multer": "^2.2.0",
+    "@types/node": "^26.3.0",
+    "dotenv": "^17.4.2",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
   }
 }
